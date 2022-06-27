@@ -63,6 +63,7 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
         '',
       ),
       contextType: getConfigValue(rawConfig.contextType, 'any'),
+      customOptions: getConfigValue(rawConfig.customOptions, '{}'),
       apolloCacheImportFrom: getConfigValue(
         rawConfig.apolloCacheImportFrom,
         rawConfig.reactApolloVersion === 3
@@ -166,8 +167,10 @@ export class ApolloNextSSRVisitor extends ClientSideBaseVisitor<
             ? 'const apolloClient = getApolloClient(ctx);'
             : ''
         }
-        
-        const data = await apolloClient.query<${operationResultType}>({ ...options, query: ${this.getDocumentNodeVariable(
+        const allOptions = {...options, ${
+          this.config.customOptions ? `...${this.config.customOptions}` : ''
+        }}
+        const data = await apolloClient.query<${operationResultType}>({ ...allOptions, query: ${this.getDocumentNodeVariable(
       documentVariableName,
     )} });
         

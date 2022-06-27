@@ -91,6 +91,11 @@ export type Config = {
   contextType?: string
 
   /**
+   * @description Add extra values to queries arguments
+   */
+  customOptions?: string
+
+  /**
    * @description Add apolloClient instance imports
    */
   apolloClientInstanceImport?: string
